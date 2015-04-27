@@ -469,8 +469,8 @@ if(response != '\0') response++;
 if(response != '\0') response++;
 if(response != '\0') response++;
 
-*mymsg = '\n';
-mymsg++;
+//*mymsg = '\n';
+//mymsg++;
 *mymsg = '\0';
 mymsg = temp;
 
