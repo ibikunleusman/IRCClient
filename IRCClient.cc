@@ -21,6 +21,7 @@ char * sport;// = (char*)malloc(20*sizeof(char));
 int port;
 char *room;
 GtkTreeSelection *selection;
+GtkTreeSelection *selection2;
 enum
 {
   LIST_ITEM = 0,
@@ -168,6 +169,8 @@ void refresh_msg(int i) {
 
 }
 */
+
+/*
   void update_list_users() { 
 	if(room != NULL) {
 	 GtkTreeIter iter;
@@ -223,6 +226,8 @@ void refresh_msg(int i) {
 
 }
 }
+
+*/
   void update_list_rooms() {  GtkTreeIter iter;
     int i;
        char * command = (char*)malloc(1000*sizeof(char));
@@ -803,7 +808,7 @@ label = gtk_label_new("");
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
 
-
+/*
 //Add list of users
     // Add list of rooms. Use columns 0 to 2 (exclusive) and rows 0 to 2 
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
@@ -813,7 +818,7 @@ label = gtk_label_new("");
     gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
     gtk_widget_show (userlist);
 
-
+*/
 
 
 //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
