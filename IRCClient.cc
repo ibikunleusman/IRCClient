@@ -354,7 +354,9 @@ static void insert_text( GtkTextBuffer *buffer, const char * initialText )
    GtkTextIter iter;
  
    gtk_text_buffer_get_iter_at_offset (buffer, &iter, 0);
-   gtk_text_buffer_insert (buffer, &iter, initialText,-1);
+//   gtk_text_buffer_insert (buffer, &iter, initialText,-1);
+gtk_text_buffer_set_text(buffer, initialText, -1);
+
 }
    
 /* Create a scrolled text area that displays a "message" */
