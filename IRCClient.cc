@@ -436,7 +436,7 @@ void  on_changed(GtkWidget *widget, gpointer label)
 	room = strdup(value);
 	//printf("%s",room);
 	
-
+	
 	refresh_msg(0);	
 
 
@@ -451,6 +451,7 @@ time_handler(GtkWidget *widget)
 {
 clear_list_rooms();
   update_list_rooms();
+if(room != NULL) 
 refresh_msg(0);
 return TRUE;
 }
