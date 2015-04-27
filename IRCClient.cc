@@ -358,6 +358,18 @@ static void insert_text( GtkTextBuffer *buffer, const char * initialText )
 gtk_text_buffer_set_text(buffer, initialText, -1);
 
 }
+
+static void append_text(GtkTextBuffer *buffer, const char *initialText ) {
+   GtkTextIter iter;
+   
+   gtk_text_buffer_get_iter_at_offset (buffer, &iter, 0);
+   gtk_text_buffer_insert (buffer, &iter, initialText,-1);
+//gtk_text_buffer_set_text(buffer, initialText, -1);
+ 
+
+
+}
+
    
 /* Create a scrolled text area that displays a "message" */
 static GtkWidget *create_text( const char * initialText )
@@ -440,7 +452,33 @@ void refresh_msg(int i) {
 	strcpy(a,room);
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
-//gtk_text_buffer_set_text(buffer,response,-1);	
+//gtk_text_buffer_set_text(buffer,response,-1);
+
+int j = 0;
+while(*response != '\0') {
+char * mymsg = (char*)malloc(MAX_RESPONSE*sizeof(char));
+char *temp = mymsg;
+response++;
+response++;
+while(*response != '\r') {
+*mymsg = *response;
+mymsg++;
+response++;
+}
+response++;
+response++;
+*mymsg = '\n';
+mymsg++;
+*mymsg = '\0';
+mymsg = temp;
+
+if(j>=i) insert_text(buffer,response);
+
+j++;
+
+
+}
+	
 	insert_text(buffer,response);
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
