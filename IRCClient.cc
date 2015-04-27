@@ -158,7 +158,7 @@ void update_list_rooms() {
                             0, msg,
                             -1);
         g_free (msg);
-	sleep(5);
+//	sleep(5);
 
 
 	
