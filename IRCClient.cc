@@ -532,6 +532,9 @@ void  on_changed(GtkWidget *widget, gpointer label)
          char *str = (char*)malloc(15*sizeof(char));
         sprintf(str, "%s: entered room ", user);//check for possible bug
         strcpy(a,str); 
+	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+
 	insert_text(buffer,"");	
 	refresh_msg(0);	
 	
