@@ -455,6 +455,7 @@ void refresh_msg(int i) {
 //gtk_text_buffer_set_text(buffer,response,-1);
 
 int j = 0;
+/*
 while(*response != '\0') {
 char * mymsg = (char*)malloc(200*sizeof(char));
 char *temp = mymsg;
@@ -480,8 +481,8 @@ j++;
 //free(temp);
 
 }
-	
-	//insert_text(buffer,response);
+*/	
+	insert_text(buffer,response);
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
