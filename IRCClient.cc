@@ -26,7 +26,7 @@ enum
   LIST_ITEM = 0,
   N_COLUMNS
 };
-void refresh_msg(int);                    
+//void refresh_msg(int);                    
 int open_client_socket(char * host, int port) {
         // Initialize socket address structure
         struct  sockaddr_in socketAddress;
@@ -129,9 +129,45 @@ GtkTreeIter iter;
         //gtk_list_store_set (GTK_LIST_STORE (list_rooms),
          gtk_list_store_clear(GTK_LIST_STORE (list_rooms));
 }
+/*
+void refresh_msg(int i) {
+      char * command = (char*)malloc(1000*sizeof(char));
 
-void update_list_rooms() {
-    GtkTreeIter iter;
+        strcpy(command,"GET-MESSAGES");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,password);
+
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+         char *str = (char*)malloc(15*sizeof(char));
+        sprintf(str, "%d", i);//check for possible bug
+        strcpy(a,str);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+
+        strcpy(a,room);
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+
+        create_text(response);
+
+
+
+
+}
+*/
+  void update_list_rooms() {  GtkTreeIter iter;
     int i;
        char * command = (char*)malloc(1000*sizeof(char));
 	
@@ -299,6 +335,7 @@ realized with gtk_widget_realize, but it would have to be part of
 a hierarchy first */
 
 //
+/*
 static gboolean
 time_handler(GtkWidget *widget)
 {
@@ -307,6 +344,7 @@ clear_list_rooms();
 refresh_msg(0);
 return TRUE;
 }
+*/
 //
 static void insert_text( GtkTextBuffer *buffer, const char * initialText )
 {
@@ -338,6 +376,8 @@ static GtkWidget *create_text( const char * initialText )
 
    return scrolled_window;
 }
+
+
 
 void refresh_msg(int i) {
       char * command = (char*)malloc(1000*sizeof(char));
@@ -400,6 +440,16 @@ void  on_changed(GtkWidget *widget, gpointer label)
   }
 
 }
+
+static gboolean
+time_handler(GtkWidget *widget)
+{
+clear_list_rooms();
+  update_list_rooms();
+refresh_msg(0);
+return TRUE;
+}
+
 int main( int   argc,
           char *argv[] )
 {
