@@ -116,6 +116,14 @@ printUsage()
 
 GtkListStore * list_rooms;
 
+void clear_list_rooms() {
+GtkTreeIter iter;
+               //gchar *msg = g_strdup_printf ("%s", room1);
+       // gtk_list_store_append (GTK_LIST_STORE (list_rooms), &iter);
+        //gtk_list_store_set (GTK_LIST_STORE (list_rooms),
+         gtk_list_store_clear(GTK_LIST_STORE (list_rooms));
+}
+
 void update_list_rooms() {
     GtkTreeIter iter;
     int i;
