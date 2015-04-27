@@ -122,7 +122,7 @@ printUsage()
 
 
 GtkListStore * list_rooms;
-
+GtkListStore * list_users;
 void clear_list_rooms() {
 GtkTreeIter iter;
                //gchar *msg = g_strdup_printf ("%s", room1);
@@ -168,6 +168,61 @@ void refresh_msg(int i) {
 
 }
 */
+  void update_list_users() { 
+	if(room != NULL) {
+	 GtkTreeIter iter;
+    int i;
+       char * command = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command,"GET-USERS-IN-ROOM");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,password);
+
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,room);
+
+
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+   
+        while(*response != '\0') {
+        
+        char * room1 = (char*)malloc(100*sizeof(char)); 
+        char * a1 = room1;
+        while(*response != '\r') { 
+        *room1 = *response;
+        room1++;
+        response++;
+        }
+        *room1 = '\0';
+        room1 = a1;
+        response++;
+        response++;
+                gchar *msg = g_strdup_printf ("%s", room1);
+        gtk_list_store_append (GTK_LIST_STORE (list_rooms), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (list_rooms),
+                            &iter,
+                            0, msg,
+                            -1);
+        g_free (msg);
+    
+   
+    }
+
+
+}
+}
   void update_list_rooms() {  GtkTreeIter iter;
     int i;
        char * command = (char*)malloc(1000*sizeof(char));
@@ -719,6 +774,7 @@ int main( int   argc,
     GtkWidget *list;
     GtkWidget *messages;
     GtkWidget *myMessage;
+//	GTKWidget *userlist;
 //    GtkTreeSelection *selection;
 GtkWidget *label;
     gtk_init (&argc, &argv);
@@ -739,13 +795,27 @@ label = gtk_label_new("");
     gtk_table_set_col_spacings(GTK_TABLE (table), 5);
     gtk_widget_show (table);
 
-    // Add list of rooms. Use columns 0 to 4 (exclusive) and rows 0 to 4 (exclusive)
+    // Add list of rooms. Use columns 2 to 4 (exclusive) and rows 0 to 2 (exclusive)
     list_rooms = gtk_list_store_new (1, G_TYPE_STRING);
     update_list_rooms();
 //  g_timeout_add_seconds(5,update_list_rooms(),NULL);
 	  list = create_list ("Rooms", list_rooms);
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
+
+
+//Add list of users
+    // Add list of rooms. Use columns 0 to 2 (exclusive) and rows 0 to 2 
+    list_users = gtk_list_store_new (1, G_TYPE_STRING);
+    update_list_users();
+//  g_timeout_add_seconds(5,update_list_rooms(),NULL);
+          list = create_list ("Users", list_rooms);
+    gtk_table_attach_defaults (GTK_TABLE (table), list, 0, 2, 0, 2);
+    gtk_widget_show (list);
+
+
+
+
 //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
     messages = create_text ("");
