@@ -705,10 +705,14 @@ time_handler(GtkWidget *widget)
 {
 clear_list_rooms();
   update_list_rooms();
+
+if(room != NULL) {
 clear_list_users();
 update_list_users();
-if(room != NULL) 
+ 
 refresh_msg(0);
+
+}
 return TRUE;
 }
 
