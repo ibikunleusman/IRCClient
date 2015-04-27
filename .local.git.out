@@ -79,3 +79,6 @@
  3 files changed, 8 insertions(+), 6 deletions(-)
 [master e343448] Make IRCServer
  3 files changed, 6 insertions(+), 3 deletions(-)
+[master 3d8c1ce] Make IRCServer
+ 3 files changed, 9 insertions(+), 7 deletions(-)
+ rewrite IRCClient (60%)

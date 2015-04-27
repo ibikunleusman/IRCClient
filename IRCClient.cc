@@ -413,9 +413,9 @@ void refresh_msg(int i) {
 	strcpy(a,room);
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
-gtk_text_buffer_set_text(buffer,response,-1);	
+//gtk_text_buffer_set_text(buffer,response,-1);	
 //	insert_text(buffer,response);
-//	messages = create_text(response);	
+	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
 	
