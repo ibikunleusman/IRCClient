@@ -134,7 +134,7 @@ void update_list_rooms() {
 	a++;
 	strcpy(a,password);
 
-	while(1){	
+//	while(1){	
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
 		
@@ -162,7 +162,7 @@ void update_list_rooms() {
 
 
 	
-	}
+//	}
 
 
 }
@@ -361,7 +361,8 @@ int main( int   argc,
     // Add list of rooms. Use columns 0 to 4 (exclusive) and rows 0 to 4 (exclusive)
     list_rooms = gtk_list_store_new (1, G_TYPE_STRING);
     update_list_rooms();
-    list = create_list ("Rooms", list_rooms);
+//  g_timeout_add_seconds(5,update_list_rooms(),NULL);
+	  list = create_list ("Rooms", list_rooms);
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
    
@@ -382,8 +383,12 @@ int main( int   argc,
     
     gtk_widget_show (table);
     gtk_widget_show (window);
-
-    gtk_main ();
+//	g_timeout_add_seconds(5, update_list_rooms(),);
+  while(1) {
+update_list_rooms();
+sleep(5);
+}
+	  gtk_main ();
 
     return 0;
 }
