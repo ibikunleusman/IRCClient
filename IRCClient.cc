@@ -760,7 +760,19 @@ char * mess1 = (char*) mess;
 }
 
 
-void login_dialog(GtkWidget *widget) {
+void login_dialog(GtkWidget *widget, gpointer window) {
+        GtkWidget *dialog, *label;
+        dialog = gtk_dialog_new_with_buttons("Dialog", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label = gtk_label_new("You clicked the button");
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), label, 0,0,0);
+        gtk_widget_show_all(dialog);
+        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+        if(response == GTK_RESPONSE_OK)
+                g_print("You klicked OK\n");
+        else
+                g_print("You klicked Cancel\n");
+        gtk_widget_destroy(dialog);
+
 
 }
 
@@ -899,7 +911,7 @@ g_timeout_add(5000, (GSourceFunc) time_handler, (gpointer) window);
 
 //callbacks
     g_signal_connect (send_button, "clicked", G_CALLBACK (send_message), NULL);
-g_signal_connect (login_button, "clicked", G_CALLBACK (login_dialog), NULL);//check pwd and store user and pwd
+g_signal_connect (login_button, "clicked", G_CALLBACK (login_dialog), window);//check pwd and store user and pwd
 g_signal_connect (register_button, "clicked", G_CALLBACK (register_dialog), NULL);//create user
 g_signal_connect (room_button, "clicked", G_CALLBACK (room_dialog), NULL); //create new room
   g_signal_connect(selection, "changed",  G_CALLBACK(on_changed), label); // when room is changed 	
