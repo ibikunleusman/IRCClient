@@ -503,8 +503,8 @@ void  on_changed(GtkWidget *widget, gpointer label)
 	room = strdup(value);
 	//printf("%s",room);
 	
-	
-	refresh_msg(0);	
+	insert_text(buffer,"");	
+//	refresh_msg(0);	
 
 
 
