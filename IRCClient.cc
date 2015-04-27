@@ -210,8 +210,8 @@ void refresh_msg(int i) {
         response++;
         response++;
                 gchar *msg = g_strdup_printf ("%s", room1);
-        gtk_list_store_append (GTK_LIST_STORE (list_rooms), &iter);
-        gtk_list_store_set (GTK_LIST_STORE (list_rooms),
+        gtk_list_store_append (GTK_LIST_STORE (list_users), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (list_users),
                             &iter,
                             0, msg,
                             -1);
