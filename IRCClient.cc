@@ -131,6 +131,12 @@ GtkTreeIter iter;
         //gtk_list_store_set (GTK_LIST_STORE (list_rooms),
          gtk_list_store_clear(GTK_LIST_STORE (list_rooms));
 }
+
+void clear_list_users() {
+
+gtk_list_store_clear(GTK_LIST_STORE (list_users));
+}
+
 /*
 void refresh_msg(int i) {
       char * command = (char*)malloc(1000*sizeof(char));
@@ -170,7 +176,7 @@ void refresh_msg(int i) {
 }
 */
 
-/*
+
   void update_list_users() { 
 	if(room != NULL) {
 	 GtkTreeIter iter;
@@ -227,7 +233,7 @@ void refresh_msg(int i) {
 }
 }
 
-*/
+
   void update_list_rooms() {  GtkTreeIter iter;
     int i;
        char * command = (char*)malloc(1000*sizeof(char));
@@ -625,6 +631,8 @@ if(strcmp(room,value)==0)
 	
 }  	
 	room = strdup(value);
+
+	update_list_users();// updates user list in room
 	//printf("%s",room);
 
 	               char * command = (char*)malloc(1000*sizeof(char));
@@ -697,6 +705,8 @@ time_handler(GtkWidget *widget)
 {
 clear_list_rooms();
   update_list_rooms();
+clear_list_users();
+update_list_users();
 if(room != NULL) 
 refresh_msg(0);
 return TRUE;
@@ -808,17 +818,17 @@ label = gtk_label_new("");
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
 
-/*
+
 //Add list of users
     // Add list of rooms. Use columns 0 to 2 (exclusive) and rows 0 to 2 
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
-    update_list_users();
+   // update_list_users();
 //  g_timeout_add_seconds(5,update_list_rooms(),NULL);
           userlist = create_list ("Users", list_users);
     gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
     gtk_widget_show (userlist);
 
-*/
+
 
 
 //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
