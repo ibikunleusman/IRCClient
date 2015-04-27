@@ -495,15 +495,16 @@ void  on_changed(GtkWidget *widget, gpointer label)
   GtkTreeIter iter;
   GtkTreeModel *model;
   char *value;
-if(room != NULL) {
-if(strcmp(room,value)==0)
-	return;
-}
   if (gtk_tree_selection_get_selected(GTK_TREE_SELECTION(widget), &model, &iter)) {
 
     gtk_tree_model_get(model, &iter, 0, &value,  -1);
    // gtk_label_set_text(GTK_LABEL(label), value);
- 	if(room != NULL) {
+ 	
+if(room != NULL) {
+if(strcmp(room,value)==0)
+        return;
+}
+	if(room != NULL) {
 	char * command3 = (char*)malloc(1000*sizeof(char));
         strcpy(command3,"LEAVE-ROOM");
         char *c = command3; 
