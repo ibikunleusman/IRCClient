@@ -334,6 +334,9 @@ when our window is realized. We could also force our window to be
 realized with gtk_widget_realize, but it would have to be part of
 a hierarchy first */
 
+
+GtkTextBuffer *buffer;
+
 //
 /*
 static gboolean
@@ -359,7 +362,7 @@ static GtkWidget *create_text( const char * initialText )
 {
    GtkWidget *scrolled_window;
    GtkWidget *view;
-   GtkTextBuffer *buffer;
+   //GtkTextBuffer *buffer;
 
    view = gtk_text_view_new ();
    buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
@@ -380,10 +383,10 @@ static GtkWidget *create_text( const char * initialText )
 
 
 void refresh_msg(int i) {
-      GtkTextBuffer *buffer;
-	GtkWidget *view;
-   view = gtk_text_view_new ();
-   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+//      GtkTextBuffer *buffer;
+//	GtkWidget *view;
+  // view = gtk_text_view_new ();
+  // buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 	GtkWidget *messages;
 	char * command = (char*)malloc(1000*sizeof(char));
         
@@ -414,7 +417,7 @@ void refresh_msg(int i) {
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
 //gtk_text_buffer_set_text(buffer,response,-1);	
-//	insert_text(buffer,response);
+	insert_text(buffer,response);
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
