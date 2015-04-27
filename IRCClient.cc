@@ -809,7 +809,7 @@ label = gtk_label_new("");
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
     update_list_users();
 //  g_timeout_add_seconds(5,update_list_rooms(),NULL);
-          list = create_list ("Users", list_rooms);
+          list = create_list ("Users", list_users);
     gtk_table_attach_defaults (GTK_TABLE (table), list, 0, 2, 0, 2);
     gtk_widget_show (list);
 
