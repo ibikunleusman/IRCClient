@@ -20,6 +20,7 @@ char * sport;// = (char*)malloc(20*sizeof(char));
 //char *command = (char*)malloc(20*sizeof(char));
 int port;
 char *room;
+GtkTreeSelection *selection;
 enum
 {
   LIST_ITEM = 0,
@@ -288,7 +289,8 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
     gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
 	  		         GTK_TREE_VIEW_COLUMN (column));
 
-    return scrolled_window;
+  selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree_view));
+	  return scrolled_window;
 }
    
 /* Add some text to our text widget - this is a callback that is invoked
@@ -353,7 +355,6 @@ void  on_changed(GtkWidget *widget, gpointer label)
   }
 
 }
-GtkTreeSelection *selection;
 int main( int   argc,
           char *argv[] )
 {
@@ -381,7 +382,7 @@ int main( int   argc,
     GtkWidget *list;
     GtkWidget *messages;
     GtkWidget *myMessage;
-    GtkTreeSelection *selection;
+//    GtkTreeSelection *selection;
 GtkWidget *label;
     gtk_init (&argc, &argv);
    
@@ -408,7 +409,7 @@ label = gtk_label_new("");
 	  list = create_list ("Rooms", list_rooms);
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
-selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
+//selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
     messages = create_text ("Peter: Hi how are you\nMary: I am fine, thanks and you?\nPeter: Fine thanks.\n");
     gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
