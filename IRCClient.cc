@@ -127,9 +127,11 @@ void update_list_rooms() {
 	a++;
 	}	
 	*a = ' ';
+	a++;
 	strcpy(a,user);
 	while(*a != '\0') a++;
 	*a = ' ';
+	a++;
 	strcpy(a,password);
 	
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
