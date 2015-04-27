@@ -380,10 +380,10 @@ static GtkWidget *create_text( const char * initialText )
 
 
 void refresh_msg(int i) {
-      GtkTextBuffer *buffer;
-	GtkWidget *view;
-   view = gtk_text_view_new ();
-   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+//      GtkTextBuffer *buffer;
+//	GtkWidget *view;
+  // view = gtk_text_view_new ();
+  // buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 	
 	char * command = (char*)malloc(1000*sizeof(char));
         
@@ -414,8 +414,8 @@ void refresh_msg(int i) {
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
 	
-	insert_text(buffer,response);
-	
+//	insert_text(buffer,response);
+	create_text(response);	
 	
 	
 	
