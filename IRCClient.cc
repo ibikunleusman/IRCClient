@@ -472,14 +472,14 @@ mymsg++;
 *mymsg = '\0';
 mymsg = temp;
 
-if(j>=i) insert_text(buffer,response);
+if(j>=i) append_text(buffer,mymsg);
 
 j++;
 
 
 }
 	
-	insert_text(buffer,response);
+	//insert_text(buffer,response);
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
