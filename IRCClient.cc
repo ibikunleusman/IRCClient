@@ -26,7 +26,7 @@ enum
   LIST_ITEM = 0,
   N_COLUMNS
 };
-                    
+void refresh_msg(int);                    
 int open_client_socket(char * host, int port) {
         // Initialize socket address structure
         struct  sockaddr_in socketAddress;
@@ -304,6 +304,7 @@ time_handler(GtkWidget *widget)
 {
 clear_list_rooms();
   update_list_rooms();
+refresh_msg(0);
 return TRUE;
 }
 //
@@ -391,7 +392,7 @@ void  on_changed(GtkWidget *widget, gpointer label)
 	//printf("%s",room);
 	
 
-	
+	refresh_msg(0);	
 
 
 
