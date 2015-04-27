@@ -466,7 +466,6 @@ mymsg++;
 response++;
 }
 response++;
-if(*response != '\0')
 response++;
 
 *mymsg = '\n';
@@ -474,7 +473,7 @@ mymsg++;
 *mymsg = '\0';
 mymsg = temp;
 
-if(j>=i) insert_text(buffer,mymsg);
+if(j>=i) insert_text(buffer,(const char*)mymsg);
 
 j++;
 //free(mymsg);
