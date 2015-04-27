@@ -343,8 +343,7 @@ void  on_changed(GtkWidget *widget, gpointer label)
   char *value;
 
 
-  if (gtk_tree_selection_get_selected(
-      GTK_TREE_SELECTION(widget), &model, &iter)) {
+  if (gtk_tree_selection_get_selected(GTK_TREE_SELECTION(widget), &model, &iter)) {
 
     gtk_tree_model_get(model, &iter, LIST_ITEM, &value,  -1);
    // gtk_label_set_text(GTK_LABEL(label), value);
@@ -409,7 +408,7 @@ label = gtk_label_new("");
 	  list = create_list ("Rooms", list_rooms);
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
-selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list));   
+selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
     messages = create_text ("Peter: Hi how are you\nMary: I am fine, thanks and you?\nPeter: Fine thanks.\n");
     gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
