@@ -231,6 +231,23 @@ void refresh_msg(int i) {
 
 
 }
+
+else {
+
+GtkTreeIter iter;
+
+           gchar *msg = g_strdup_printf ("");
+        gtk_list_store_append (GTK_LIST_STORE (list_users), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (list_users),
+                            &iter,
+                            0, msg,
+                            -1);
+        g_free (msg);
+
+
+}
+
+
 }
 
 
@@ -824,10 +841,10 @@ label = gtk_label_new("");
 
 
 //Add list of users
-    // Add list of rooms. Use columns 0 to 2 (exclusive) and rows 0 to 2 
+    // Add list of users. Use columns 0 to 2 (exclusive) and rows 0 to 2 
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
-   // update_list_users();
-//  g_timeout_add_seconds(5,update_list_rooms(),NULL);
+    update_list_users();
+// g_timeout_add_seconds(5,update_list_rooms(),NULL);
           userlist = create_list ("Users", list_users);
     gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
     gtk_widget_show (userlist);
