@@ -501,14 +501,71 @@ void  on_changed(GtkWidget *widget, gpointer label)
 
     gtk_tree_model_get(model, &iter, 0, &value,  -1);
    // gtk_label_set_text(GTK_LABEL(label), value);
-   	
+ 	if(room != NULL) {
+	char * command3 = (char*)malloc(1000*sizeof(char));
+        strcpy(command3,"LEAVE-ROOM");
+        char *c = command3; 
+        while(*c != '\0') {
+        c++;
+        }
+        *c = ' ';
+        c++;
+        strcpy(c,user);
+        while(*c != '\0') c++;
+        *c = ' ';
+        c++;
+        strcpy(c,password);
+        
+        while(*c != '\0') c++;
+        *c = ' ';
+        c++;
+        strcpy(c,room);
+       // strcpy(a,str);
+        char *response3= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command3, response3);
+
+
+	//send: user has left room
+
+	char * command4 = (char*)malloc(1000*sizeof(char));
+        strcpy(command4,"SEND-MESSAGE");
+        char *d = command4;
+        while(*d != '\0') {
+        d++;
+        }
+        *d = ' ';
+        d++;
+        strcpy(d,user);
+        while(*d != '\0') d++;
+        *d = ' ';
+        d++;
+        strcpy(d,password);
+        
+        while(*d != '\0') d++;
+        *d = ' ';
+        d++;
+        strcpy(d,room);
+            
+	while(*d != '\0') d++;
+        *d = ' ';
+        d++;
+       strcpy(d,": has left the room");
+       // strcpy(a,str);
+        char *response4= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command4, response4);  
+        
+
+	
+	
+	
+	
+}  	
 	room = strdup(value);
 	//printf("%s",room);
-	
 
-	       char * command = (char*)malloc(1000*sizeof(char));
-        
-        strcpy(command,"SEND-MESSAGE");
+	               char * command = (char*)malloc(1000*sizeof(char));
+
+        strcpy(command,"ENTER-ROOM");
         char *a = command;
         while(*a != '\0') {
         a++;
@@ -516,24 +573,50 @@ void  on_changed(GtkWidget *widget, gpointer label)
         *a = ' ';
         a++;
         strcpy(a,user);
-        while(*a != '\0') a++;  
+        while(*a != '\0') a++;
         *a = ' ';
-        a++;
+        a++;  
         strcpy(a,password);
-
-	while(*a != '\0') a++;
-        *a = ' ';
-        a++;
-        strcpy(a,room);
-
+        
         while(*a != '\0') a++;
         *a = ' ';
         a++;
-         char *str = (char*)malloc(15*sizeof(char));
-        sprintf(str, "%s: entered room ", user);//check for possible bug
-        strcpy(a,str); 
-	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        strcpy(a,room);
+        
+       
+       // strcpy(a,str);
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
+		
+	//send message that user has entered room
+	char * command1 = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command1,"SEND-MESSAGE");
+        char *b = command1;
+        while(*b != '\0') {
+        b++;
+        }
+        *b = ' ';
+        b++;
+        strcpy(b,user);
+        while(*b != '\0') b++;  
+        *b = ' ';
+        b++;
+        strcpy(b,password);
+
+	while(*b != '\0') b++;
+        *b = ' ';
+        b++;
+        strcpy(b,room);
+
+        while(*b != '\0') b++;
+        *b = ' ';
+        b++;
+        // char *str = (char*)malloc(15*sizeof(char));
+       // sprintf(str, "%s: entered room ", user);//check for possible bug
+        strcpy(b,": has entered room"); 
+	char *response1= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command1, response1);
 
 	insert_text(buffer,"");	
 	refresh_msg(0);	
