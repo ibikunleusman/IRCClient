@@ -882,7 +882,7 @@ label = gtk_label_new("");
 
  // Add Create  Room  button. Use columns 3 to 4 (exclusive) and rows 7 to 8 (exclusive)
     GtkWidget *room_button = gtk_button_new_with_label ("New Room");
-    gtk_table_attach_defaults(GTK_TABLE (table), room_button, 2, 3, 7, 8);
+    gtk_table_attach_defaults(GTK_TABLE (table), room_button, 3, 4, 7, 8);
     gtk_widget_show (room_button);
     
     gtk_widget_show (table);
