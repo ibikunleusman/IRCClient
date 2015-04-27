@@ -133,7 +133,8 @@ void update_list_rooms() {
 	*a = ' ';
 	a++;
 	strcpy(a,password);
-	
+
+	while(1){	
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
 		
@@ -157,14 +158,14 @@ void update_list_rooms() {
                             0, msg,
                             -1);
         g_free (msg);
-	
+	sleep(5);
 
 
 	
 	}
 
 
-
+}
     /* Add some messages to the window */
    /* for (i = 0; i < 10; i++) {
         gchar *msg = g_strdup_printf ("Room %d", i);
