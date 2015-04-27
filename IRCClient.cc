@@ -358,7 +358,7 @@ void refresh_msg(int i) {
         *a = ' ';
         a++;
     	 char *str = (char*)malloc(15*sizeof(char));
-        sprintf(str, "%s", i);//check for possible bug
+        sprintf(str, "%d", i);//check for possible bug
 	strcpy(a,str);
 	while(*a != '\0') a++;
         *a = ' ';
@@ -367,8 +367,8 @@ void refresh_msg(int i) {
 	strcpy(a,room);
 	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
-
 	
+	create_text(response);
 	
 	
 	
