@@ -460,7 +460,7 @@ char * mymsg = (char*)malloc(MAX_RESPONSE*sizeof(char));
 char *temp = mymsg;
 response++;
 response++;
-while(*response != '\r') {
+while(*response != '\n') {
 *mymsg = *response;
 mymsg++;
 response++;
