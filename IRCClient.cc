@@ -476,7 +476,7 @@ if(j>=i) append_text(buffer,mymsg);
 
 j++;
 free(mymsg);
-free(temp);
+//free(temp);
 
 }
 	
