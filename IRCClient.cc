@@ -283,6 +283,14 @@ when our window is realized. We could also force our window to be
 realized with gtk_widget_realize, but it would have to be part of
 a hierarchy first */
 
+//
+static gboolean
+time_handler(GtkWidget *widget)
+{
+  update_list_rooms();
+return TRUE;
+}
+//
 static void insert_text( GtkTextBuffer *buffer, const char * initialText )
 {
    GtkTextIter iter;
@@ -383,11 +391,15 @@ int main( int   argc,
     
     gtk_widget_show (table);
     gtk_widget_show (window);
-//	g_timeout_add_seconds(5, update_list_rooms(),);
-  while(1) {
-update_list_rooms();
-sleep(5);
-}
+//g_timeout_add_seconds(10, callback, "callback_function");
+//	g_timeout_add_seconds(5, update_list_rooms(),(gpointer)NULL);
+
+g_timeout_add(5000, (GSourceFunc) time_handler, (gpointer) window);
+
+//  while(1) {
+//update_list_rooms();
+//sleep(5);
+//}
 	  gtk_main ();
 
     return 0;
