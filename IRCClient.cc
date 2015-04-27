@@ -384,7 +384,7 @@ void refresh_msg(int i) {
 //	GtkWidget *view;
   // view = gtk_text_view_new ();
   // buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
-	
+	GtkWidget *messages;
 	char * command = (char*)malloc(1000*sizeof(char));
         
         strcpy(command,"GET-MESSAGES");
@@ -415,8 +415,9 @@ void refresh_msg(int i) {
         sendCommand(host, port, command, response);
 	
 //	insert_text(buffer,response);
-	create_text(response);	
-	
+	messages = create_text(response);	
+//    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
+    gtk_widget_show (messages);	
 	
 	
 }
