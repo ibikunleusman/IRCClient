@@ -1,15 +1,170 @@
-
+#include <time.h>   
+//#include <curses.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <gtk/gtk.h>
+
+//client code
+
+char * user;// = (char*)malloc(20*sizeof(char));
+char * password;// = (char*)malloc(20*sizeof(char));
+char * host;// =  (char*)malloc(20*sizeof(char));
+char * sport;// = (char*)malloc(20*sizeof(char));
+//char *command = (char*)malloc(20*sizeof(char));
+int port;
+char *room;
+                    
+int open_client_socket(char * host, int port) {
+        // Initialize socket address structure
+        struct  sockaddr_in socketAddress;
+        
+        // Clear sockaddr structure
+        memset((char *)&socketAddress,0,sizeof(socketAddress));
+                
+        // Set family to Internet
+        socketAddress.sin_family = AF_INET;
+        
+        // Set port
+        socketAddress.sin_port = htons((u_short)port);
+                
+        // Get host table entry for this host
+        struct  hostent  *ptrh = gethostbyname(host);
+        if ( ptrh == NULL ) {
+                perror("gethostbyname");
+                exit(1);
+        }
+
+        // Copy the host ip address to socket address structure
+        memcpy(&socketAddress.sin_addr, ptrh->h_addr, ptrh->h_length);
+        
+        // Get TCP transport protocol entry
+        struct  protoent *ptrp = getprotobyname("tcp");
+        if ( ptrp == NULL ) {
+                perror("getprotobyname");
+                exit(1);
+        }
+        
+        // Create a tcp socket
+        int sock = socket(PF_INET, SOCK_STREAM, ptrp->p_proto);
+        if (sock < 0) {
+                perror("socket");
+                exit(1);
+        }
+        
+        // Connect the socket to the specified server
+        if (connect(sock, (struct sockaddr *)&socketAddress,
+                    sizeof(socketAddress)) < 0) {
+                perror("connect");
+                exit(1);
+        }
+        
+        return sock;
+}
+                
+#define MAX_RESPONSE (10 * 1024)
+int sendCommand(char *  host, int port, char * command, char * response) {
+        
+        int sock = open_client_socket( host, port);
+        
+        if (sock<0) {
+                return 0;
+        }
+                
+        // Send command 
+        write(sock, command, strlen(command));
+        write(sock, "\r\n",2);
+        
+        //Print copy to stdout
+        write(1, command, strlen(command));
+        write(1, "\r\n",2);
+                
+        // Keep reading until connection is closed or MAX_REPONSE
+        int n = 0;
+        int len = 0;
+        while ((n=read(sock, response+len, MAX_RESPONSE - len))>0) {
+                len += n;
+        }
+        response[len]=0;
+         
+        printf("response:\n%s\n", response);
+        
+        close(sock);
+        
+        return 1;
+}
+
+void
+printUsage()
+{
+        printf("Usage: test-talk-server host port command\n");
+        exit(1);
+}       
+        
+
+
+//client code
+
+
+
 
 GtkListStore * list_rooms;
 
 void update_list_rooms() {
     GtkTreeIter iter;
     int i;
+       char * command = (char*)malloc(1000*sizeof(char));
+	
+	strcpy(command,"LIST-ROOMS");
+	char *a = command;
+	while(*a != '\0') {
+	a++;
+	}	
+	*a = ' ';
+	strcpy(a,user);
+	while(*a != '\0') a++;
+	*a = ' ';
+	strcpy(a,password);
+	
+	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+		
+	while(*response != '\0') {
+		
+	char * room1 = (char*)malloc(100*sizeof(char));
+	char * a1 = room1;
+	while(*response != '\r') {
+	*room1 = *response;
+	room1++;
+	response++;
+	}
+	*room1 = '\0';
+	room1 = a1;
+	response++;
+	response++;
+	        gchar *msg = g_strdup_printf ("%s", room1);
+        gtk_list_store_append (GTK_LIST_STORE (list_rooms), &iter);
+        gtk_list_store_set (GTK_LIST_STORE (list_rooms),
+                            &iter, 
+                            0, msg,
+                            -1);
+        g_free (msg);
+	
+
+
+	
+	}
+
+
 
     /* Add some messages to the window */
-    for (i = 0; i < 10; i++) {
+   /* for (i = 0; i < 10; i++) {
         gchar *msg = g_strdup_printf ("Room %d", i);
         gtk_list_store_append (GTK_LIST_STORE (list_rooms), &iter);
         gtk_list_store_set (GTK_LIST_STORE (list_rooms), 
@@ -18,6 +173,8 @@ void update_list_rooms() {
 	                    -1);
 	g_free (msg);
     }
+
+*/
 }
 
 /* Create the list of "messages" */
@@ -30,7 +187,7 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
     GtkTreeViewColumn *column;
 
     int i;
-   
+   int lmsg;  //last message received
     /* Create a new scrolled window, with scrollbars only if needed */
     scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -42,7 +199,66 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
     gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
     gtk_widget_show (tree_view);
-   
+//new code   
+	
+	       char * command = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command,"GET-MESSAGES");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        strcpy(a,user);
+        while(*a != '\0') a++;
+        *a = ' ';
+        strcpy(a,password);
+ 	while(*a != '\0') a++;
+	*a = ' ';
+	char str[15];
+	sprintf(str, "%d", lmsg);
+	strcpy(a,str);
+	while(*a != '\0') a++;
+	
+	*a = ' ';
+	strcpy(a,room); //after room is selected
+	
+	
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+ 
+        
+	while(*response != '\0') {
+        response++;  //skip over message number
+	response++;
+        char * msg1 = (char*)malloc(100*sizeof(char));
+        char * a1 = msg1;
+        while(*response != '\r') {
+        
+	*msg1 = *response;
+        msg1++;
+        response++;
+        }
+        *msg1 = '\0';
+        msg1 = a1;
+        response++;  
+        response++;
+
+	
+//	        gchar *msg = g_strdup_printf ("%d", msg1);
+  //      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+    //    gtk_list_store_set (GTK_LIST_STORE (model),
+      //                      &iter,   
+        //                    0, msg,
+          //                  -1);
+      //  g_free (msg);
+
+	
+	
+	}
+
+
+//new code
     cell = gtk_cell_renderer_text_new ();
 
     column = gtk_tree_view_column_new_with_attributes (titleColumn,
@@ -95,6 +311,26 @@ static GtkWidget *create_text( const char * initialText )
 int main( int   argc,
           char *argv[] )
 {
+
+
+	//char response[MAX_RESPONSE];
+        //sendCommand(host, port, command, response);
+            if (argc < 4) {
+                printUsage();
+        }
+        
+        host = argv[1];
+        sport = argv[2];
+        user = argv[3];
+         password = argv[4];
+        sscanf(sport, "%d", &port);
+         
+
+
+
+        //char response[MAX_RESPONSE];
+        //sendCommand(host, port, command, response);
+
     GtkWidget *window;
     GtkWidget *list;
     GtkWidget *messages;
