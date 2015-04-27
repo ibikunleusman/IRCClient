@@ -295,6 +295,7 @@ a hierarchy first */
 static gboolean
 time_handler(GtkWidget *widget)
 {
+clear_list_rooms();
   update_list_rooms();
 return TRUE;
 }
