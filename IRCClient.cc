@@ -199,6 +199,7 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
     gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
     gtk_widget_show (tree_view);
+/*
 //new code   
 	
 	       char * command = (char*)malloc(1000*sizeof(char));
@@ -259,7 +260,9 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
 
 
 //new code
-    cell = gtk_cell_renderer_text_new ();
+  
+*/
+  cell = gtk_cell_renderer_text_new ();
 
     column = gtk_tree_view_column_new_with_attributes (titleColumn,
                                                        cell,
