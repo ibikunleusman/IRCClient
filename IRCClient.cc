@@ -338,6 +338,43 @@ static GtkWidget *create_text( const char * initialText )
    return scrolled_window;
 }
 
+void refresh_msg(int i) {
+      char * command = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command,"GET-MESSAGES");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user);
+        while(*a != '\0') a++;  
+        *a = ' ';
+        a++;
+        strcpy(a,password);
+	
+	while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+    	 char *str = (char*)malloc(15*sizeof(char));
+        sprintf(str, "%s", i);//check for possible bug
+	strcpy(a,str);
+	while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+	
+	strcpy(a,room);
+	char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+
+	
+	
+	
+	
+	
+}
+
 void  on_changed(GtkWidget *widget, gpointer label) 
 {
   GtkTreeIter iter;
@@ -351,7 +388,13 @@ void  on_changed(GtkWidget *widget, gpointer label)
    // gtk_label_set_text(GTK_LABEL(label), value);
    	
 	room = strdup(value);
-	printf("%s",room);
+	//printf("%s",room);
+	
+
+	
+
+
+
 	 g_free(value);
   }
 
@@ -412,7 +455,7 @@ label = gtk_label_new("");
     gtk_widget_show (list);
 //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_rooms));   
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
-    messages = create_text ("Peter: Hi how are you\nMary: I am fine, thanks and you?\nPeter: Fine thanks.\n");
+    messages = create_text ("");
     gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
     gtk_widget_show (messages);
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
