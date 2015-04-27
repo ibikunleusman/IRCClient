@@ -336,7 +336,7 @@ a hierarchy first */
 
 
 GtkTextBuffer *buffer;
-
+GtkTextBuffer *buffer1;
 //
 /*
 static gboolean
@@ -377,6 +377,28 @@ static GtkWidget *create_text( const char * initialText )
 
    gtk_widget_show_all (scrolled_window);
 
+   return scrolled_window;
+}
+
+static GtkWidget *create_text1( const char * initialText ) 
+{
+   GtkWidget *scrolled_window;
+   GtkWidget *view;
+   //GtkTextBuffer *buffer;
+        
+   view = gtk_text_view_new ();
+   buffer1 = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+        
+   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                   GTK_POLICY_AUTOMATIC,
+                                   GTK_POLICY_AUTOMATIC);
+        
+   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+   insert_text (buffer, initialText);
+        
+   gtk_widget_show_all (scrolled_window);
+         
    return scrolled_window;
 }
 
@@ -421,7 +443,7 @@ void refresh_msg(int i) {
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
-gtk_text_buffer_insert(buffer, 0, response,-1);	
+//gtk_text_buffer_insert(buffer, 0, response,-1);	
 	
 }
 
@@ -521,7 +543,7 @@ label = gtk_label_new("");
     gtk_widget_show (messages);
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
 
-    myMessage = create_text ("I am fine, thanks and you?\n");
+    myMessage = create_text1 ("I am fine, thanks and you?\n");
     gtk_table_attach_defaults (GTK_TABLE (table), myMessage, 0, 4, 5, 7);
     gtk_widget_show (myMessage);
 
