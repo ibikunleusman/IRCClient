@@ -505,9 +505,36 @@ void  on_changed(GtkWidget *widget, gpointer label)
 	room = strdup(value);
 	//printf("%s",room);
 	
+
+	       char * command = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command,"SEND-MESSAGE");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user);
+        while(*a != '\0') a++;  
+        *a = ' ';
+        a++;
+        strcpy(a,password);
+
+	while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,room);
+
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+         char *str = (char*)malloc(15*sizeof(char));
+        sprintf(str, "%s: entered room ", user);//check for possible bug
+        strcpy(a,str); 
 	insert_text(buffer,"");	
 	refresh_msg(0);	
-
+	
 
 
 	 g_free(value);
