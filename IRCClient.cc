@@ -758,6 +758,22 @@ char * mess1 = (char*) mess;
 
 
 }
+
+
+void login_dialog(GtkWidget *widget) {
+
+}
+
+void register_dialog(GtkWidget *widget) {
+
+}
+
+void room_dialog(GtkWidget *widget) {
+
+
+}
+
+
 int main( int   argc,
           char *argv[] )
 {
@@ -839,21 +855,53 @@ label = gtk_label_new("");
     gtk_widget_show (myMessage);
 
 
-    // Add send button. Use columns 0 to 1 (exclusive) and rows 4 to 7 (exclusive)
+    // Add send button. Use columns 0 to 1 (exclusive) and rows 7 to 8 (exclusive)
     GtkWidget *send_button = gtk_button_new_with_label ("Send");
     gtk_table_attach_defaults(GTK_TABLE (table), send_button, 0, 1, 7, 8); 
     gtk_widget_show (send_button);
     
-    gtk_widget_show (table);
-    gtk_widget_show (window);
-//g_timeout_add_seconds(10, callback, "callback_function");
-//	g_timeout_add_seconds(5, update_list_rooms(),(gpointer)NULL);
+    //gtk_widget_show (table);
+    //gtk_widget_show (window);
 
+    // Add login button. Use columns 1 to 2 (exclusive) and rows 7 to 8 (exclusive)
+    GtkWidget *login_button = gtk_button_new_with_label ("Login");
+    gtk_table_attach_defaults(GTK_TABLE (table), login_button, 1, 2, 7, 8);
+    gtk_widget_show (login_button);
+
+    //gtk_widget_show (table);
+    //gtk_widget_show (window);
+
+
+    // Add Create Account button. Use columns 2 to 3 (exclusive) and rows 7 to 8 (exclusive)
+    GtkWidget *register_button = gtk_button_new_with_label ("Sign up");
+    gtk_table_attach_defaults(GTK_TABLE (table), register_button, 2, 3, 7, 8);
+    gtk_widget_show (register_button);
+
+    //gtk_widget_show (table);
+    //gtk_widget_show (window);
+
+ // Add Create  Room  button. Use columns 3 to 4 (exclusive) and rows 7 to 8 (exclusive)
+    GtkWidget *room_button = gtk_button_new_with_label ("New Room");
+    gtk_table_attach_defaults(GTK_TABLE (table), room_button, 2, 3, 7, 8);
+    gtk_widget_show (room_button);
+    
+    gtk_widget_show (table);
+    gtk_widget_show (window); 
+
+
+
+
+
+
+
+// 5 sec timer	
 g_timeout_add(5000, (GSourceFunc) time_handler, (gpointer) window);
 
 //callbacks
     g_signal_connect (send_button, "clicked", G_CALLBACK (send_message), NULL);
-
+g_signal_connect (login_button, "clicked", G_CALLBACK (login_dialog), NULL);//check pwd and store user and pwd
+g_signal_connect (register_button, "clicked", G_CALLBACK (register_dialog), NULL);//create user
+g_signal_connect (room_button, "clicked", G_CALLBACK (room_dialog), NULL); //create new room
   g_signal_connect(selection, "changed",  G_CALLBACK(on_changed), label); // when room is changed 	
 
 
