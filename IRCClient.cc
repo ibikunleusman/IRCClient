@@ -474,7 +474,7 @@ mymsg++;
 *mymsg = '\0';
 mymsg = temp;
 
-if(j>=i) append_text(buffer,mymsg);
+if(j>=i) insert_text(buffer,mymsg);
 
 j++;
 //free(mymsg);
