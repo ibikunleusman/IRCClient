@@ -455,34 +455,34 @@ void refresh_msg(int i) {
 //gtk_text_buffer_set_text(buffer,response,-1);
 
 int j = 0;
-/*
+
 while(*response != '\0') {
 char * mymsg = (char*)malloc(200*sizeof(char));
 char *temp = mymsg;
 response++;
-response++;
+if(response != '\0') response++;
 while(*response != '\r') {
 *mymsg = *response;
 mymsg++;
-response++;
+if(response != '\0') response++;
 }
-response++;
-response++;
+if(response != '\0') response++;
+if(response != '\0') response++;
 
 *mymsg = '\n';
 mymsg++;
 *mymsg = '\0';
 mymsg = temp;
 
-if(j>=i) insert_text(buffer,(const char*)mymsg);
+if(j>=i) append_text(buffer,(const char*)mymsg);
 
 j++;
 //free(mymsg);
 //free(temp);
 
 }
-*/	
-	append_text(buffer,response);
+	
+//	append_text(buffer,response);
 //	messages = create_text(response);	
 //    gtk_table_attach_defaults (GTK_TABLE (table), messages, 0, 4, 2, 5);
   //  gtk_widget_show (messages);	
