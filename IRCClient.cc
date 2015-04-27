@@ -314,7 +314,7 @@ GtkTreeIter iter;
 */
 }
 
-/* Create the list of "messages" */
+/* Create the list of "rooms" */
 static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
 {
     GtkWidget *scrolled_window;
@@ -336,70 +336,8 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
     gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
     gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
     gtk_widget_show (tree_view);
-/*
-//new code   
-	
-	       char * command = (char*)malloc(1000*sizeof(char));
-        
-        strcpy(command,"GET-MESSAGES");
-        char *a = command;
-        while(*a != '\0') {
-        a++;
-        }
-        *a = ' ';
-        strcpy(a,user);
-        while(*a != '\0') a++;
-        *a = ' ';
-        strcpy(a,password);
- 	while(*a != '\0') a++;
-	*a = ' ';
-	char str[15];
-	sprintf(str, "%d", lmsg);
-	strcpy(a,str);
-	while(*a != '\0') a++;
-	
-	*a = ' ';
-	strcpy(a,room); //after room is selected
-	
-	
-        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
-        sendCommand(host, port, command, response);
- 
-        
-	while(*response != '\0') {
-        response++;  //skip over message number
-	response++;
-        char * msg1 = (char*)malloc(100*sizeof(char));
-        char * a1 = msg1;
-        while(*response != '\r') {
-        
-	*msg1 = *response;
-        msg1++;
-        response++;
-        }
-        *msg1 = '\0';
-        msg1 = a1;
-        response++;  
-        response++;
 
-	
-//	        gchar *msg = g_strdup_printf ("%d", msg1);
-  //      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-    //    gtk_list_store_set (GTK_LIST_STORE (model),
-      //                      &iter,   
-        //                    0, msg,
-          //                  -1);
-      //  g_free (msg);
-
-	
-	
-	}
-
-
-//new code
-  
-*/
-  cell = gtk_cell_renderer_text_new ();
+	cell = gtk_cell_renderer_text_new ();
 
     column = gtk_tree_view_column_new_with_attributes (titleColumn,
                                                        cell,
@@ -413,6 +351,43 @@ static GtkWidget *create_list( const char * titleColumn, GtkListStore *model )
 	  return scrolled_window;
 }
    
+/* Create the list of "users" */
+static GtkWidget *create_list2( const char * titleColumn, GtkListStore *model )
+{
+    GtkWidget *scrolled_window;
+    GtkWidget *tree_view;
+    //GtkListStore *model;
+    GtkCellRenderer *cell;
+    GtkTreeViewColumn *column;
+        
+    int i;
+   int lmsg;  //last message received
+    /* Create a new scrolled window, with scrollbars only if needed */
+    scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                    GTK_POLICY_AUTOMATIC,
+                                    GTK_POLICY_AUTOMATIC);
+  
+    //model = gtk_list_store_new (1, G_TYPE_STRING);
+    tree_view = gtk_tree_view_new ();
+    gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view), GTK_TREE_MODEL (model));
+    gtk_widget_show (tree_view);
+
+        cell = gtk_cell_renderer_text_new ();
+    
+    column = gtk_tree_view_column_new_with_attributes (titleColumn,
+                                                       cell,
+                                                       "text", 0,
+                                                       NULL);
+    
+    gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view),
+                                 GTK_TREE_VIEW_COLUMN (column));
+  
+  selection2 = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree_view));
+          return scrolled_window;
+}
+
 /* Add some text to our text widget - this is a callback that is invoked
 when our window is realized. We could also force our window to be
 realized with gtk_widget_realize, but it would have to be part of
@@ -839,16 +814,16 @@ label = gtk_label_new("");
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
 
-/*
+
 //Add list of users
     // Add list of users. Use columns 0 to 2 (exclusive) and rows 0 to 2 
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
     update_list_users();
 // g_timeout_add_seconds(5,update_list_rooms(),NULL);
-          userlist = create_list ("Users", list_users);
+          userlist = create_list2 ("Users", list_users);
     gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
     gtk_widget_show (userlist);
-*/
+
 
 
 
@@ -862,15 +837,6 @@ label = gtk_label_new("");
     myMessage = create_text1 ("");
     gtk_table_attach_defaults (GTK_TABLE (table), myMessage, 0, 4, 5, 7);
     gtk_widget_show (myMessage);
-
-//Add list of users
-    // Add list of users. Use columns 0 to 2 (exclusive) and rows 0 to 2
-    list_users = gtk_list_store_new (1, G_TYPE_STRING);
-    update_list_users();
-// g_timeout_add_seconds(5,update_list_rooms(),NULL);
-          userlist = create_list ("Users", list_users);
-    gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
-    gtk_widget_show (userlist);
 
 
     // Add send button. Use columns 0 to 1 (exclusive) and rows 4 to 7 (exclusive)
