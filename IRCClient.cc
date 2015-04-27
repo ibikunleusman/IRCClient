@@ -456,17 +456,19 @@ void refresh_msg(int i) {
 
 int j = 0;
 while(*response != '\0') {
-char * mymsg = (char*)malloc(MAX_RESPONSE*sizeof(char));
+char * mymsg = (char*)malloc(200*sizeof(char));
 char *temp = mymsg;
 response++;
 response++;
-while(*response != '\n') {
+while(*response != '\r') {
 *mymsg = *response;
 mymsg++;
 response++;
 }
 response++;
+if(*response != '\0')
 response++;
+
 *mymsg = '\n';
 mymsg++;
 *mymsg = '\0';
