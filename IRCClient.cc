@@ -26,7 +26,8 @@ enum
   LIST_ITEM = 0,
   N_COLUMNS
 };
-//void refresh_msg(int);                    
+//void refresh_msg(int);
+//void send_message(( GtkWidget , gpointer));                    
 int open_client_socket(char * host, int port) {
         // Initialize socket address structure
         struct  sockaddr_in socketAddress;
@@ -641,6 +642,56 @@ refresh_msg(0);
 return TRUE;
 }
 
+
+//callback for send button
+
+void send_message( GtkWidget *widget, gpointer   data ) {
+GtkTextIter iter1;
+GtkTextIter iter2;
+gtk_text_buffer_get_start_iter(buffer1, &iter1);
+gtk_text_buffer_get_end_iter(buffer1,&iter2);
+
+gchar *mess =   gtk_text_buffer_get_text(buffer1, &iter1, &iter2, FALSE);
+
+char * mess1 = (char*) mess;
+
+        char * command1 = (char*)malloc(1000*sizeof(char));
+ 
+        strcpy(command1,"SEND-MESSAGE");
+        char *b = command1;
+        while(*b != '\0') {
+        b++;
+        }
+        *b = ' ';
+        b++;
+        strcpy(b,user);
+        while(*b != '\0') b++; 
+        *b = ' ';
+        b++;
+        strcpy(b,password);
+
+        while(*b != '\0') b++;
+        *b = ' ';
+        b++;
+        strcpy(b,room);
+                
+        while(*b != '\0') b++;
+        *b = ' ';
+        b++;
+        // char *str = (char*)malloc(15*sizeof(char));
+       // sprintf(str, "%s: entered room ", user);//check for possible bug
+        strcpy(b,mess1);
+        char *response1= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command1, response1);
+
+	insert_text(buffer1,"");
+
+
+
+
+
+
+}
 int main( int   argc,
           char *argv[] )
 {
@@ -702,7 +753,7 @@ label = gtk_label_new("");
     gtk_widget_show (messages);
     // Add messages text. Use columns 0 to 4 (exclusive) and rows 4 to 7 (exclusive) 
 
-    myMessage = create_text1 ("I am fine, thanks and you?\n");
+    myMessage = create_text1 ("");
     gtk_table_attach_defaults (GTK_TABLE (table), myMessage, 0, 4, 5, 7);
     gtk_widget_show (myMessage);
 
@@ -719,6 +770,7 @@ label = gtk_label_new("");
 g_timeout_add(5000, (GSourceFunc) time_handler, (gpointer) window);
 
 //callbacks
+    g_signal_connect (send_button, "clicked", G_CALLBACK (send_message), NULL);
 
   g_signal_connect(selection, "changed",  G_CALLBACK(on_changed), label); // when room is changed 	
 
