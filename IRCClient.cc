@@ -384,10 +384,10 @@ int main( int   argc,
     gtk_widget_show (table);
     gtk_widget_show (window);
 //	g_timeout_add_seconds(5, update_list_rooms(),);
-  while(1) {
-update_list_rooms();
-sleep(5);
-}
+  //while(1) {
+//update_list_rooms();
+//sleep(5);
+//}
 	  gtk_main ();
 
     return 0;
