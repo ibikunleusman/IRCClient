@@ -353,7 +353,7 @@ void  on_changed(GtkWidget *widget, gpointer label)
   }
 
 }
-
+GtkTreeSelection *selection;
 int main( int   argc,
           char *argv[] )
 {
