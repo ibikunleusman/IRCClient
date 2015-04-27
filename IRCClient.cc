@@ -351,6 +351,7 @@ void  on_changed(GtkWidget *widget, gpointer label)
    // gtk_label_set_text(GTK_LABEL(label), value);
    	
 	room = strdup(value);
+	printf(room);
 	 g_free(value);
   }
 
