@@ -839,7 +839,7 @@ label = gtk_label_new("");
     gtk_table_attach_defaults (GTK_TABLE (table), list, 2, 4, 0, 2);
     gtk_widget_show (list);
 
-
+/*
 //Add list of users
     // Add list of users. Use columns 0 to 2 (exclusive) and rows 0 to 2 
     list_users = gtk_list_store_new (1, G_TYPE_STRING);
@@ -848,7 +848,7 @@ label = gtk_label_new("");
           userlist = create_list ("Users", list_users);
     gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
     gtk_widget_show (userlist);
-
+*/
 
 
 
@@ -862,6 +862,16 @@ label = gtk_label_new("");
     myMessage = create_text1 ("");
     gtk_table_attach_defaults (GTK_TABLE (table), myMessage, 0, 4, 5, 7);
     gtk_widget_show (myMessage);
+
+//Add list of users
+    // Add list of users. Use columns 0 to 2 (exclusive) and rows 0 to 2
+    list_users = gtk_list_store_new (1, G_TYPE_STRING);
+    update_list_users();
+// g_timeout_add_seconds(5,update_list_rooms(),NULL);
+          userlist = create_list ("Users", list_users);
+    gtk_table_attach_defaults (GTK_TABLE (table), userlist, 0, 2, 0, 2);
+    gtk_widget_show (userlist);
+
 
     // Add send button. Use columns 0 to 1 (exclusive) and rows 4 to 7 (exclusive)
     GtkWidget *send_button = gtk_button_new_with_label ("Send");
