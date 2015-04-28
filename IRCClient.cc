@@ -761,41 +761,63 @@ char * mess1 = (char*) mess;
 
 
 void login_dialog(GtkWidget *widget, gpointer window) {
-        GtkWidget *dialog, *label,  *user, * password;
+        GtkWidget *dialog, *label,  *user1, * password1;
         dialog = gtk_dialog_new_with_buttons("Dialog", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
         label = gtk_label_new("Username");
 
 	//username
-    user = gtk_entry_new ();
-    gtk_entry_set_max_length (GTK_ENTRY (user), 50);
+    user1 = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (user1), 50);
    // g_signal_connect (entry, "activate",
      //                 G_CALLBACK (enter_callback),
        //               user);//
-    gtk_entry_set_text (GTK_ENTRY (user), "Username");
+    gtk_entry_set_text (GTK_ENTRY (user1), "Username");
 
 		//password
-	password = gtk_entry_new ();
-    gtk_entry_set_max_length (GTK_ENTRY (password), 50);
+	password1 = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (password1), 50);
   //  g_signal_connect (entry, "activate",
     //                  G_CALLBACK (enter_callback),
       //                entry);//
-    gtk_entry_set_text (GTK_ENTRY (password), "Password");
-gtk_entry_set_visibility (GTK_ENTRY (password),0);
+    gtk_entry_set_text (GTK_ENTRY (password1), "Password");
+gtk_entry_set_visibility (GTK_ENTRY (password1),0);
 
 
 
 
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), label, 0,0,0);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), user, 0,1,0);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), password, 1,0,0);	
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), user1, 0,1,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), password1, 1,0,0);	
 
 	
         gtk_widget_show_all(dialog);
         gint response = gtk_dialog_run(GTK_DIALOG(dialog));
-        if(response == GTK_RESPONSE_OK)
-                g_print("You klicked OK\n");
-        else
-                g_print("You klicked Cancel\n");
+        if(response == GTK_RESPONSE_OK) {
+                //g_print("You klicked OK\n");
+	  const char *user_text;
+  user_text = (const char*)gtk_entry_get_text (GTK_ENTRY (user1));
+
+          const char *pass_text;
+  pass_text = (const char*)gtk_entry_get_text (GTK_ENTRY (password1));
+
+
+//check username and password
+
+//end check
+
+//set username and password
+
+user = strdup(user_text);
+password = strdup(pass_text);
+
+
+
+
+	}
+        else {
+
+                //g_print("You klicked Cancel\n");
+}
         gtk_widget_destroy(dialog);
 
 
