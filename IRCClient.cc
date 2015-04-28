@@ -831,9 +831,11 @@ gtk_entry_set_visibility (GTK_ENTRY (password1),0);
         gtk_widget_show_all(dialog1);
 	gint response1 = gtk_dialog_run(GTK_DIALOG(dialog1));
 	        if(response1 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
 }
                 
         else {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
 }
 
 return;
@@ -849,9 +851,12 @@ else {
         gtk_widget_show_all(dialog2);
 	gint response2 = gtk_dialog_run(GTK_DIALOG(dialog2));
 	if(response2 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
 }
 
+
 	else {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
 }
 }
 
