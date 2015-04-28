@@ -802,6 +802,50 @@ gtk_entry_set_visibility (GTK_ENTRY (password1),0);
 
 
 //check username and password
+        char * command = (char*)malloc(1000*sizeof(char));
+        
+        strcpy(command,"GET-ALL-USERS");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user_text);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,pass_text);
+        
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+
+	if(strcmp(response,"DENIED\r\n")) {
+//denied pop up
+
+        GtkWidget *dialog1, *label1;
+        dialog1 = gtk_dialog_new_with_buttons("Dialog", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label1 = gtk_label_new("Incorrect Username or Password");
+
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog1) -> vbox), label1, 0,0,0);
+        gtk_widget_show_all(dialog1);
+
+
+return;
+}
+
+else {
+//Logged in successfully
+        GtkWidget *dialog2, *label2;                     
+        dialog2 = gtk_dialog_new_with_buttons("Dialog", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label2 = gtk_label_new("Logged in successfully");
+        
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog2) -> vbox), label2, 0,0,0);
+        gtk_widget_show_all(dialog2);
+
+}
+
+
 
 //end check
 
