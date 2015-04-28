@@ -820,7 +820,7 @@ gtk_entry_set_visibility (GTK_ENTRY (password1),0);
         char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
         sendCommand(host, port, command, response);
 
-	if(strcmp(response,"DENIED\r\n") == 0) {
+	if(strcmp(response,"ERROR: (Wrong password)\r\n") == 0) {
 //denied pop up
 
         GtkWidget *dialog1, *label1;
