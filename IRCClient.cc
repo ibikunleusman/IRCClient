@@ -1046,8 +1046,7 @@ if(strcmp(response,"OK\r\n")==0) {
                 if(response1 == GTK_RESPONSE_OK) {
 gtk_widget_destroy(GTK_WIDGET(dialog1));
 }
-  
-        else {
+  else {
 gtk_widget_destroy(GTK_WIDGET(dialog1));
 }
 gtk_widget_destroy(dialog);
