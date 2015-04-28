@@ -989,7 +989,94 @@ return;
 
 }
 
-void room_dialog(GtkWidget *widget) {
+void room_dialog(GtkWidget *widget, gpointer window) {
+
+        GtkWidget *dialog, *label,  *room;
+        dialog = gtk_dialog_new_with_buttons("Create Room", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+NULL);  
+        label = gtk_label_new("Enter room name:");
+        
+        //username
+    room = gtk_entry_new ();   
+    gtk_entry_set_max_length (GTK_ENTRY (room), 50);
+    gtk_entry_set_text (GTK_ENTRY (room), "Room Name");
+
+        
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), label, 0,0,0);
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), room, 0,1,0);
+        
+        gtk_widget_show_all(dialog);
+        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+        if(response == GTK_RESPONSE_OK) {
+          const char *room_text;
+  room_text = (const char*)gtk_entry_get_text (GTK_ENTRY (room));
+//Send create room command
+        char * command = (char*)malloc(1000*sizeof(char));
+    
+        strcpy(command,"CREATE-ROOM");
+        char *a = command;
+        while(*a != '\0') {
+        a++;
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,password);
+	while(*a != '\0') a++;
+        *a = ' '; 
+        a++;
+        strcpy(a,room_text);         
+
+
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+        
+if(strcmp(response,"OK\r\n")==0) {
+//room created 
+       GtkWidget *dialog1, *label1;
+        dialog1 = gtk_dialog_new_with_buttons("Message", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label1 = gtk_label_new("Room created sucessfully");
+ 
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog1) -> vbox), label1, 0,0,0);
+        gtk_widget_show_all(dialog1);
+        gint response1 = gtk_dialog_run(GTK_DIALOG(dialog1));
+                if(response1 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
+}
+  
+        else {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
+}
+gtk_widget_destroy(dialog);
+return;
+
+}
+
+else {
+//room name is taken
+        GtkWidget *dialog2, *label2;
+        dialog2 = gtk_dialog_new_with_buttons("Message", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label2 = gtk_label_new("Unsuccessful: Room of this name already exists");
+        
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog2) -> vbox), label2, 0,0,0);
+        gtk_widget_show_all(dialog2);
+        gint response2 = gtk_dialog_run(GTK_DIALOG(dialog2));
+                if(response2 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
+}
+        
+        else {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
+}
+gtk_widget_destroy(dialog);
+return;
+  
+}
+
+}
 
 
 }
