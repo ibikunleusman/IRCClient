@@ -761,10 +761,35 @@ char * mess1 = (char*) mess;
 
 
 void login_dialog(GtkWidget *widget, gpointer window) {
-        GtkWidget *dialog, *label;
+        GtkWidget *dialog, *label,  *user, * password;
         dialog = gtk_dialog_new_with_buttons("Dialog", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
-        label = gtk_label_new("You clicked the button");
+        label = gtk_label_new("Username");
+
+	//username
+    user = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (user), 50);
+   // g_signal_connect (entry, "activate",
+     //                 G_CALLBACK (enter_callback),
+       //               user);//
+    gtk_entry_set_text (GTK_ENTRY (user), "Username");
+
+		//password
+	password = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (password), 50);
+  //  g_signal_connect (entry, "activate",
+    //                  G_CALLBACK (enter_callback),
+      //                entry);//
+    gtk_entry_set_text (GTK_ENTRY (password), "Password");
+gtk_entry_set_visibility (GTK_ENTRY (password),0);
+
+
+
+
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), label, 0,0,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), user, 0,1,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), password, 1,0,0);	
+
+	
         gtk_widget_show_all(dialog);
         gint response = gtk_dialog_run(GTK_DIALOG(dialog));
         if(response == GTK_RESPONSE_OK)
