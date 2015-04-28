@@ -882,7 +882,110 @@ password = strdup(pass_text);
 
 }
 
-void register_dialog(GtkWidget *widget) {
+
+
+void register_dialog(GtkWidget *widget, gpointer window) {
+        GtkWidget *dialog, *label,  *user1, * password1;
+        dialog = gtk_dialog_new_with_buttons("Create Account", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
+NULL);
+        label = gtk_label_new("Username");
+        
+        //username
+    user1 = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (user1), 50);
+   // g_signal_connect (entry, "activate",
+     //                 G_CALLBACK (enter_callback),
+       //               user);//
+    gtk_entry_set_text (GTK_ENTRY (user1), "Username");
+        
+                //password
+        password1 = gtk_entry_new ();
+    gtk_entry_set_max_length (GTK_ENTRY (password1), 50);    
+  //  g_signal_connect (entry, "activate",
+    //                  G_CALLBACK (enter_callback),
+      //                entry);//
+    gtk_entry_set_text (GTK_ENTRY (password1), "Password");
+gtk_entry_set_visibility (GTK_ENTRY (password1),0);
+         
+        
+        
+        
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), label, 0,0,0);
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), user1, 0,1,0);
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog) -> vbox), password1, 1,0,0);
+        
+        
+        gtk_widget_show_all(dialog);
+        gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+        if(response == GTK_RESPONSE_OK) {
+          const char *user_text;
+  user_text = (const char*)gtk_entry_get_text (GTK_ENTRY (user1));
+
+          const char *pass_text;
+  pass_text = (const char*)gtk_entry_get_text (GTK_ENTRY (password1));
+
+//Add username and password
+        char * command = (char*)malloc(1000*sizeof(char));   
+                
+        strcpy(command,"ADD-USER");
+        char *a = command;
+        while(*a != '\0') {
+        a++;  
+        }
+        *a = ' ';
+        a++;
+        strcpy(a,user_text);
+        while(*a != '\0') a++;
+        *a = ' ';
+        a++;
+        strcpy(a,pass_text);
+        
+        char *response= (char*)malloc(MAX_RESPONSE*sizeof(char));
+        sendCommand(host, port, command, response);
+
+	if(strcmp(response,"OK\r\n") == 0) {
+//registered
+        GtkWidget *dialog1, *label1;
+        dialog1 = gtk_dialog_new_with_buttons("Message", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        label1 = gtk_label_new("Registration Sucessful");
+
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog1) -> vbox), label1, 0,0,0);
+        gtk_widget_show_all(dialog1);
+        gint response1 = gtk_dialog_run(GTK_DIALOG(dialog1));
+                if(response1 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
+}
+
+        else {
+gtk_widget_destroy(GTK_WIDGET(dialog1));
+}
+gtk_widget_destroy(dialog);
+return;
+
+}
+
+else {
+//username already in use
+        GtkWidget *dialog2, *label2;
+        dialog2 = gtk_dialog_new_with_buttons("Message", GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);    
+        label2 = gtk_label_new("Registration Un-sucessful");
+ 
+        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog2) -> vbox), label2, 0,0,0);
+        gtk_widget_show_all(dialog2);
+        gint response2 = gtk_dialog_run(GTK_DIALOG(dialog2));
+                if(response2 == GTK_RESPONSE_OK) {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
+}
+ 
+        else {
+gtk_widget_destroy(GTK_WIDGET(dialog2));
+}
+gtk_widget_destroy(dialog);
+return;
+
+}
+
+}
 
 }
 
@@ -1018,7 +1121,7 @@ g_timeout_add(5000, (GSourceFunc) time_handler, (gpointer) window);
 //callbacks
     g_signal_connect (send_button, "clicked", G_CALLBACK (send_message), NULL);
 g_signal_connect (login_button, "clicked", G_CALLBACK (login_dialog), window);//check pwd and store user and pwd
-g_signal_connect (register_button, "clicked", G_CALLBACK (register_dialog), NULL);//create user
+g_signal_connect (register_button, "clicked", G_CALLBACK (register_dialog), window);//create user
 g_signal_connect (room_button, "clicked", G_CALLBACK (room_dialog), NULL); //create new room
   g_signal_connect(selection, "changed",  G_CALLBACK(on_changed), label); // when room is changed 	
 
