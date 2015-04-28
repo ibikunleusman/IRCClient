@@ -837,7 +837,7 @@ gtk_widget_destroy(GTK_WIDGET(dialog1));
         else {
 gtk_widget_destroy(GTK_WIDGET(dialog1));
 }
-
+gtk_widget_destroy(dialog);
 return;
 }
 
