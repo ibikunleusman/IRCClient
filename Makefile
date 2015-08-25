@@ -22,8 +22,8 @@ TestIRCServer: TestIRCServer.c
 IRCClient: IRCClient.cc
       
 	g++ -g -o IRCClient IRCClient.cc `pkg-config --cflags --libs gtk+-2.0`
-	git add -A  >> .local.git.out
-	git commit -a -m "Make IRCServer" >> .local.git.out
+#	git add -A  >> .local.git.out
+#	git commit -a -m "Make IRCServer" >> .local.git.out
 
 clean:
 	rm -f hello panned entry radio timer TestIRCServer
